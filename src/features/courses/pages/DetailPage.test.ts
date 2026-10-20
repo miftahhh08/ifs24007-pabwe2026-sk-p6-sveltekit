@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/svelte';
+import { fireEvent, render, screen, waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import Swal from 'sweetalert2';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -172,17 +172,29 @@ describe('DetailPage', () => {
 		expect(screen.queryByRole('button', { name: 'Kirim Rating' })).not.toBeInTheDocument();
 	});
 
-	it('tetap konsisten saat data detail diperbarui dengan isi yang sama', async () => {
-		setup(sampleDetail, otherUser);
-		await screen.findByText('50.00%');
-		coursesStore.update((state) => ({
-			...state,
-			course: {
-				...state.course!,
-				ratings: state.course!.ratings.map((rating) => ({ ...rating }))
-			}
-		}));
-		await waitFor(() => expect(screen.getByText('Keren sekali')).toBeInTheDocument());
-		expect(screen.getByText('50.00%')).toBeInTheDocument();
+	it('pemilik menyimpan sampul dan konten baru lewat modal', async () => {
+		vi.mocked(courseApi.postCover).mockResolvedValue(okResponse());
+		vi.mocked(courseApi.postContent).mockResolvedValue(okResponse());
+		setup(sampleDetail, sampleUser);
+
+		await userEvent.click(await screen.findByRole('button', { name: /ganti sampul/i }));
+		const file = new File(['x'], 'cover.png', { type: 'image/png' });
+		await fireEvent.change(screen.getByLabelText('Gambar sampul'), { target: { files: [file] } });
+		await userEvent.click(screen.getByRole('button', { name: 'Unggah' }));
+		await waitFor(() => expect(courseApi.postCover).toHaveBeenCalledWith(sampleDetail.id, file));
+		await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+
+		await userEvent.click(screen.getByRole('button', { name: /tambah konten/i }));
+		await userEvent.type(screen.getByLabelText('Judul materi'), 'Materi Baru');
+		await userEvent.type(screen.getByLabelText('Tautan YouTube'), 'https://youtu.be/uHyfQV0kbgo');
+		await userEvent.click(screen.getByRole('button', { name: 'Simpan' }));
+		await waitFor(() =>
+			expect(courseApi.postContent).toHaveBeenCalledWith(
+				sampleDetail.id,
+				'Materi Baru',
+				'https://youtu.be/uHyfQV0kbgo'
+			)
+		);
+		await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
 	});
 });

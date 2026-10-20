@@ -28,7 +28,7 @@ export default defineConfig(({ mode }) => {
 				provider: 'v8',
 				reporter: ['text', 'html'],
 				include: ['src/**/*.{ts,svelte}'],
-				exclude: ['src/**/*.test.ts', 'src/**/*.d.ts', 'src/test-utils.ts', 'src/setupTests.ts'],
+				exclude: ['src/**/*.test.ts', 'src/**/*.d.ts', 'src/test-utils.ts'],
 				thresholds: { lines: 100, functions: 100, branches: 100, statements: 100 }
 			}
 		}

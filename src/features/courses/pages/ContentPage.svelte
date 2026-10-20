@@ -9,6 +9,8 @@
 	const courseId = $derived(page.params.courseId);
 	const contentId = $derived(page.params.contentId);
 	const content = $derived($coursesStore.content);
+	// Hanya dibaca di dalam blok {:else} saat `content` sudah ada.
+	const embedUrl = $derived(getYoutubeEmbedUrl(content!.youtube));
 
 	onMount(() => {
 		fetchContent(contentId);
@@ -35,7 +37,6 @@
 		<p class="card py-16 text-center text-ink-500">Materi tidak ditemukan.</p>
 	{/if}
 {:else}
-	{@const embedUrl = getYoutubeEmbedUrl(content.youtube)}
 	<article class="space-y-5">
 		<h1 class="text-2xl font-bold text-ink-900">{content.title}</h1>
 

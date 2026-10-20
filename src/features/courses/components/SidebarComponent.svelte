@@ -4,15 +4,16 @@
 
 	let { open, onclose }: { open: boolean; onclose: () => void } = $props();
 
+	const items = [
+		{ href: '/', label: 'Semua Kursus', icon: BookOpen },
+		{ href: '/users', label: 'Daftar Pengguna', icon: Users },
+		{ href: '/profile', label: 'Profil Saya', icon: User }
+	];
+
 	const isActive = (href: string) =>
 		href === '/'
 			? page.url.pathname === '/' || page.url.pathname.startsWith('/courses')
 			: page.url.pathname.startsWith(href);
-
-	const linkClass = (href: string) => [
-		'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold transition',
-		isActive(href) ? 'bg-ink-900 text-white' : 'text-ink-700 hover:bg-ink-50'
-	];
 </script>
 
 {#if open}
@@ -32,14 +33,19 @@
 	]}
 >
 	<nav class="space-y-1" aria-label="Menu utama">
-		<a href="/" aria-current={isActive('/') ? 'page' : undefined} class={linkClass('/')} onclick={onclose}>
-			<BookOpen size={18} /> Semua Kursus
-		</a>
-		<a href="/users" aria-current={isActive('/users') ? 'page' : undefined} class={linkClass('/users')} onclick={onclose}>
-			<Users size={18} /> Daftar Pengguna
-		</a>
-		<a href="/profile" aria-current={isActive('/profile') ? 'page' : undefined} class={linkClass('/profile')} onclick={onclose}>
-			<User size={18} /> Profil Saya
-		</a>
+		{#each items as item (item.href)}
+			<a
+				href={item.href}
+				aria-current={isActive(item.href) ? 'page' : undefined}
+				class={[
+					'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold transition',
+					isActive(item.href) ? 'bg-ink-900 text-white' : 'text-ink-700 hover:bg-ink-50'
+				]}
+				onclick={onclose}
+			>
+				<item.icon size={18} />
+				<span>{item.label}</span>
+			</a>
+		{/each}
 	</nav>
 </aside>

@@ -109,7 +109,7 @@
 		<div class="p-6">
 			<h1 class="text-2xl font-bold text-ink-900">{course.title}</h1>
 			<p class="mt-1 text-sm text-ink-500">
-				Oleh {course.author.name}, dibuat {formatDate(course.created_at)}
+				{`Oleh ${course.author.name}, dibuat ${formatDate(course.created_at)}`}
 			</p>
 			<p class="mt-4 whitespace-pre-line text-ink-700">{course.description}</p>
 
@@ -118,7 +118,7 @@
 				<div><dt class="text-ink-500">Konten</dt><dd class="font-semibold">{course.contents.length}</dd></div>
 				<div><dt class="text-ink-500">Rating</dt><dd class="font-semibold">{formatRating(course.avg_ratings)}</dd></div>
 				{#if role === 'student'}
-					<div><dt class="text-ink-500">Progres belajar</dt><dd class="font-semibold">{course.my_percentage_finished}%</dd></div>
+					<div><dt class="text-ink-500">Progres belajar</dt><dd class="font-semibold">{`${course.my_percentage_finished}%`}</dd></div>
 				{/if}
 			</dl>
 
@@ -196,8 +196,8 @@
 				{#each course.ratings as item, index (index)}
 					<li class="card p-4">
 						<p class="flex items-center gap-2 font-semibold text-ink-900">
-							{item.name}
-							<span class="flex items-center gap-1 text-sm text-gold-500"><Star size={14} />{item.ratings}/5</span>
+							<span>{item.name}</span>
+							<span class="flex items-center gap-1 text-sm text-gold-500"><Star size={14} />{`${item.ratings}/5`}</span>
 						</p>
 						<p class="mt-1 text-sm text-ink-700">{item.comment}</p>
 					</li>
