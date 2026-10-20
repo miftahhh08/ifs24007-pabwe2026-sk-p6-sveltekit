@@ -1,0 +1,45 @@
+@import 'tailwindcss';
+
+@theme {
+	--font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+	--color-ink-50: #f3f6fb;
+	--color-ink-100: #e3eaf4;
+	--color-ink-200: #c8d4e6;
+	--color-ink-500: #5d6f89;
+	--color-ink-700: #1f3d66;
+	--color-ink-900: #10233f;
+	--color-gold-100: #fdf1d8;
+	--color-gold-400: #f0b84d;
+	--color-gold-500: #e8a93a;
+}
+
+@layer components {
+	.btn {
+		@apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500 disabled:cursor-not-allowed disabled:opacity-60;
+	}
+	.btn-primary {
+		@apply bg-ink-900 text-white hover:bg-ink-700;
+	}
+	.btn-accent {
+		@apply bg-gold-500 text-ink-900 hover:bg-gold-400;
+	}
+	.btn-ghost {
+		@apply border border-ink-200 bg-white text-ink-900 hover:bg-ink-50;
+	}
+	.btn-danger {
+		@apply bg-red-600 text-white hover:bg-red-700;
+	}
+	.input {
+		@apply w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm text-ink-900 placeholder:text-ink-500 focus:border-ink-700 focus:ring-2 focus:ring-gold-400 focus:outline-none;
+	}
+	.label {
+		@apply mb-1 block text-sm font-medium text-ink-700;
+	}
+	.card {
+		@apply rounded-xl border border-ink-100 bg-white shadow-sm;
+	}
+}
+
+body {
+	@apply bg-ink-50 font-sans text-ink-900 antialiased;
+}
