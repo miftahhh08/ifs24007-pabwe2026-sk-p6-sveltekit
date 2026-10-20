@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-bun';
+import adapter from '@sveltejs/adapter-vercel';
 import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
 import { svelteTesting } from '@testing-library/svelte/vite';
@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => {
 	return {
 		plugins: [
 			tailwindcss(),
-			sveltekit({ adapter: adapter({ serverOptions: { port } }) }),
+			sveltekit({ adapter: adapter() }),
 			svelteTesting()
 		],
 		server: { port, strictPort: true },
