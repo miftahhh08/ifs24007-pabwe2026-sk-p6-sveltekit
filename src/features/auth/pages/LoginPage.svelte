@@ -28,14 +28,14 @@
 
 	<form class="mt-8 space-y-5" onsubmit={handleSubmit} novalidate>
 		<div>
-			<label class="label" for="login-email">Email</label>
-			<input id="login-email" type="email" class="input" placeholder="nama@delcom.org" bind:value={$email} />
+			<label class="label" for="login-email-input">Email</label>
+			<input id="login-email-input" type="email" class="input" placeholder="nama@delcom.org" bind:value={$email} />
 		</div>
 		<div>
-			<label class="label" for="login-password">Kata sandi</label>
-			<input id="login-password" type="password" class="input" placeholder="Kata sandi" bind:value={$password} />
+			<label class="label" for="login-password-input">Kata sandi</label>
+			<input id="login-password-input" type="password" class="input" placeholder="Kata sandi" bind:value={$password} />
 		</div>
-		<button type="submit" class="btn btn-primary w-full" disabled={$authStore.isAuthLoading}>Masuk</button>
+		<button id="login-submit-button" type="submit" class="btn btn-primary w-full" disabled={$authStore.isAuthLoading}>Masuk</button>
 	</form>
 
 	<p class="mt-6 text-center text-sm text-ink-500">
